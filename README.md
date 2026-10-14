@@ -1,102 +1,86 @@
-# 🚢 Titanic Disaster: Survival Prediction & End-to-End ML Pipeline
+# 🧠 Data Science & Machine Learning Portfolio Hub
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Author](https://img.shields.io/badge/Author-Thanakrit%20Nuansuwan-blue.svg)](https://github.com/Ninnjoes)
+[![GitHub](https://img.shields.io/badge/GitHub-Ninnjoes-181717.svg?logo=github)](https://github.com/Ninnjoes)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![Scikit-Learn](https://img.shields.io/badge/scikit--learn-F7931E.svg?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![Pandas](https://img.shields.io/badge/pandas-150458.svg?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![Kaggle](https://img.shields.io/badge/Kaggle-Competition-20BEFF.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/competitions/titanic)
+[![Kaggle](https://img.shields.io/badge/Kaggle-Competitions-20BEFF.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/)
 
-An end-to-end data science portfolio project solving the classic **Kaggle Titanic: Machine Learning from Disaster** competition. This repository demonstrates exploratory data analysis (EDA), domain-driven feature engineering, cross-validation benchmarking, and production submission pipelines.
-
----
-
-## 📌 Executive Summary
-
-* **Target Variable:** Binary classification predicting passenger survival ($1 = \text{Survived}$, $0 = \text{Perished}$).
-* **Dataset Size:** 891 training records and 418 testing records across 12 raw features.
-* **Core Challenge:** Avoiding data leakage, handling high-cardinality missing values (Age, Cabin), and engineering discriminative signals from textual passenger metadata.
-* **Key Result:** Advanced from a **78.68% heuristic baseline** to **83.28% (±0.74%) cross-validated accuracy** using a tuned Random Forest ensemble.
+Welcome to my central **Data Science, Machine Learning, and Analytics Portfolio**. This repository houses my hands-on solutions to competitive machine learning challenges (Kaggle), end-to-end predictive modeling pipelines, and business intelligence analyses.
 
 ---
 
-## 🔍 Key Insights from Exploratory Data Analysis (EDA)
+## 👨‍💻 About Me
 
-1. **Gender Disparity:** Female passengers had a **74.20% survival rate**, compared to just **18.89%** for male passengers, confirming the strict enforcement of the *"Women and children first"* protocol.
-2. **Socioeconomic Stratification:** 1st Class passengers had a **62.96% survival rate**, while 3rd Class passengers had only **24.24%**.
-3. **Intersection Effect (Class $\times$ Sex):**
-   * **1st Class Females:** **96.81%** survived.
-   * **3rd Class Males:** Only **13.54%** survived.
-4. **Age Dynamics:** Young boys (honorific title `Master`, median age 3.5) had a **57.50% survival rate** despite being male, proving that age was a critical modifier for evacuation priority.
+* **Name:** Thanakrit Nuansuwan
+* **GitHub Profile:** [@Ninnjoes](https://github.com/Ninnjoes)
+* **Focus Areas:** Exploratory Data Analysis (EDA), Statistical Modeling, Feature Engineering, and Applied Machine Learning.
+* **Philosophy:** Prioritizing rigorous baselines, sound statistical validation (avoiding data leakage), and building transparent, interpretable models.
 
 ---
 
-## 🛠️ Feature Engineering & Smart Imputation
+## 🛠️ Technical Competencies
 
-| Feature | Raw Representation | Engineered Representation | Rationale |
-| :--- | :--- | :--- | :--- |
-| **Title** | Full string (`Name`) | Categorical (`Mr`, `Mrs`, `Miss`, `Master`, `Rare`) | Captures social status, marital status, and age group. |
-| **Age** | Continuous (`177 missing`) | Conditional Median by `Title` | Avoids biasing young boys (`Master`) with the adult global median (30 yrs). |
-| **FamilySize** | `SibSp` + `Parch` | Discrete ($\text{SibSp} + \text{Parch} + 1$) | Quantifies travel group size. |
-| **IsAlone** | Derived | Binary flag ($\text{FamilySize} == 1$) | Solo travelers faced distinct evacuation constraints. |
-| **LogFare** | Continuous (Skewed) | $\log(1 + \text{Fare})$ | Stabilizes variance and normalizes heavy right-skewed ticket fares. |
-
----
-
-## 📊 Model Benchmarking & Performance
-
-Models were evaluated using **Stratified 5-Fold Cross-Validation** to preserve class balance across all evaluation splits:
-
-| Model | Technique | 5-Fold CV Accuracy | Key Advantage |
-| :--- | :--- | :---: | :--- |
-| **Heuristic Baseline** | Rule: Predict Female = 1, Male = 0 | 78.68% | Benchmark threshold |
-| **Logistic Regression** | `StandardScaler` + `L2 Regularization` | 82.94% (±0.78%) | High interpretability, linear baseline |
-| **Random Forest (Winner)** | Ensemble of 150 Trees, `max_depth=5` | **83.28% (±0.74%)** | Captures non-linear feature interactions |
-
-### Top Predictive Features (Random Forest Importance)
-1. `Title_Mr` (23.8%)
-2. `Sex_Code` (20.6%)
-3. `Pclass` (12.3%)
-4. `LogFare` (9.7%)
-5. `Age` (6.4%)
-6. `FamilySize` (6.1%)
+| Domain | Tools & Techniques |
+| :--- | :--- |
+| **Programming & Computation** | Python (Pandas, NumPy, Scipy, Google Colab, Jupyter, VS Code) |
+| **Data Analysis & Visualization** | Matplotlib, Seaborn, Pivot Tables, Statistical Distributions, Correlation Analysis |
+| **Feature Engineering** | Conditional Imputation, Text Extraction (Regex), Categorical Encoding, Outlier Handling |
+| **Machine Learning** | Scikit-Learn, Logistic Regression, Decision Trees, Random Forest, Cross-Validation |
+| **Evaluation & Metrics** | Confusion Matrix, ROC-AUC, Precision/Recall, F1-Score, RMSE, Log-Loss |
 
 ---
 
-## 📂 Repository Structure
+## 📂 Projects & Competitions Directory
 
-```text
-├── README.md                      # Project documentation and portfolio overview
-├── requirements.txt               # Python package dependencies
-├── .gitignore                     # Git tracking exclusions
-├── notebooks/
-│   └── titanic_solution_walkthrough.ipynb  # Interactive walkthrough (Colab-ready)
-├── data/
-│   ├── train.csv                  # Kaggle training dataset (891 rows)
-│   └── test.csv                   # Kaggle test dataset (418 rows)
-├── 01_eda.py                      # Exploratory Data Analysis script
-├── 02_feature_engineering.py      # Data cleaning and feature extraction logic
-├── 03_train_models.py             # Model training, evaluation, and submission generator
-└── submission.csv                 # Generated Kaggle test predictions (418 rows)
-```
+| # | Project Name | Domain / Problem Type | Key Techniques | Benchmark / Score | Quick Links |
+| :-: | :--- | :--- | :--- | :-: | :---: |
+| **01** | [**Titanic: Disaster Survival Prediction**](01-titanic-survival-prediction/) | Binary Classification | Title Extraction, Conditional Imputation, Stratified 5-Fold CV, Random Forest | **83.28% CV** *(Baseline: 78.68%)* | [📂 Folder](01-titanic-survival-prediction/) • [📓 Colab Notebook](01-titanic-survival-prediction/notebooks/titanic_solution_walkthrough.ipynb) |
+| **02** | [**House Prices: Advanced Regression**](02-house-prices-regression/) | Regression / Continuous Target | High-dimensional EDA, Log-Transformations, Regularized Regression (Ridge/Lasso), XGBoost | *In Progress* | [📂 Folder](02-house-prices-regression/) |
+| **03** | [**Customer Churn & Retention Analytics**](03-customer-churn-analytics/) | Business Analytics & Classification | Cohort Analysis, ROC-AUC optimization, Customer Lifetime Value (LTV) insights | *Planned* | [📂 Folder](03-customer-churn-analytics/) |
 
 ---
 
-## 🚀 How to Run
+## 🌟 Featured Project: 01. Titanic Survival Prediction
 
-### Option A: Run Locally
+An end-to-end classification system on historical passenger manifests from the RMS Titanic.
+
+### Key Highlights:
+1. **The Heuristic Baseline Rule:** Established that predicting *all women survive and all men perish* achieves a **78.68% baseline accuracy**. All machine learning models were held to this baseline standard.
+2. **Domain Feature Engineering:** 
+   - Extracted honorific titles (`Mr`, `Mrs`, `Miss`, `Master`).
+   - Imputed missing ages conditionally (e.g., young boys with title `Master` have a median age of 3.5 years, preserving the critical "children first" protocol instead of distorting them with the adult 30-year global median).
+   - Created interaction metrics: `FamilySize`, `IsAlone`, and `LogFare`.
+3. **Model Evaluation (Stratified 5-Fold CV):**
+   - **Logistic Regression:** 82.94% (±0.78%)
+   - **Random Forest (150 estimators, max depth 5):** **83.28% (±0.74%)**
+4. **Top Predictive Factors:** Social status & gender interaction (`Title_Mr` 23.8%, `Sex` 20.6%, `Pclass` 12.3%, `Fare` 9.7%).
+
+👉 [**Read Full Titanic Technical Writeup →**](01-titanic-survival-prediction/README.md)
+
+---
+
+## 🚀 How to Run Locally
+
 ```bash
-# 1. Clone repository
-git clone https://github.com/<your-username>/titanic-survival-prediction.git
-cd titanic-survival-prediction
+# 1. Clone this portfolio repository
+git clone https://github.com/Ninnjoes/data-science-portfolio.git
+cd data-science-portfolio
 
-# 2. Setup virtual environment & install requirements
+# 2. Create and activate a virtual environment
 python3 -m venv venv
 source venv/bin/activate
+
+# 3. Install core dependencies
 pip install -r requirements.txt
 
-# 3. Execute end-to-end pipeline
+# 4. Run any project pipeline (e.g., Project 01)
+cd 01-titanic-survival-prediction
 python 01_eda.py
 python 03_train_models.py
 ```
 
-### Option B: Run on Google Colab
-Open [`notebooks/titanic_solution_walkthrough.ipynb`](notebooks/titanic_solution_walkthrough.ipynb) directly in [Google Colab](https://colab.research.google.com) to execute the complete pipeline in the cloud with zero setup.
+---
+
+*Continuous learning in progress. More projects added regularly!*
